@@ -1,6 +1,5 @@
 from abc import ABC
 
-
 class ReportGeneration(ABC):
     pass
 
