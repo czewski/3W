@@ -2,10 +2,10 @@ from abc import ABC
 import os
 import json
 import pickle
+import logging
 from datetime import datetime
 
 class TrainerLogger(ABC):
-    pass
 
     @staticmethod
     def log_optimization_progress(
@@ -24,22 +24,39 @@ class TrainerLogger(ABC):
         Returns:
             str: Path to the saved log file.
         """
-        # Validate file format
+
+        logger = logging.getLogger("TrainerLogger")
+        if not logger.handlers:
+            handler = logging.StreamHandler()
+            formatter = logging.Formatter(
+                "%(asctime)s - %(levelname)s - %(message)s"
+            )
+            handler.setFormatter(formatter)
+            logger.addHandler(handler)
+            logger.setLevel(logging.INFO)
+
         if file_format not in ["json", "pickle"]:
             raise ValueError(
                 "file_format must be either 'json' or 'pickle'"
             )
 
-        # Create directory if it does not exist
+        if not isinstance(progress_log, dict):
+            raise TypeError(
+                "progress_log must be a dictionary"
+            )
+        
+        if not progress_log:
+            raise ValueError(
+                "progress_log must be a non-empty dictionary"
+            )
+
         os.makedirs(log_dir, exist_ok=True)
 
-        # Create filename with timestamp
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         extension = ".json" if file_format == "json" else ".pkl"
         filename = f"log_{timestamp}{extension}"
         file_path = os.path.join(log_dir, filename)
 
-        # Save log file
         try:
             if file_format == "json":
                 with open(file_path, 'w', encoding='utf-8') as f:
@@ -53,11 +70,9 @@ class TrainerLogger(ABC):
                 with open(file_path, 'wb') as f:
                     pickle.dump(progress_log, f)
 
-            print(f"[TrainerLogger] Log saved at: {file_path}")
+            logger.info("Log saved at: %s", file_path)
         except Exception as e:
-            print(
-                f"[TrainerLogger] Failed to save optimization progress: {e}"
-            )
+            logger.error("Failed to save optimization progress: %s", e)
             raise
 
         return file_path
