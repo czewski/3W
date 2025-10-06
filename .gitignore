@@ -21,6 +21,10 @@ processed_data/
 # C extensions
 *.so
 
+.vscode/
+data/
+output/
+
 # Distribution / packaging
 .Python
 build/
@@ -202,4 +206,7 @@ cython_debug/
 .VolumeIcon.icns
 # Apple macOS Temporary files
 .TemporaryItems
+<<<<<<< HEAD
 >>>>>>> r1remote/main
+=======
+>>>>>>> r1remote/development

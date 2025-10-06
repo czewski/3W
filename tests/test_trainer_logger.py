@@ -1,5 +1,8 @@
 import os
+<<<<<<< HEAD
 import sys
+=======
+>>>>>>> r1remote/development
 import json
 import pickle
 import shutil
@@ -12,16 +15,28 @@ from ThreeWToolkit.utils.trainer_logger import TrainerLogger
 
 @pytest.fixture
 def sample_log():
+<<<<<<< HEAD
+=======
+    """Provide a sample optimization log for testing."""
+>>>>>>> r1remote/development
     return {
         "model": "SVM",
         "params": {"C": 1.0, "kernel": "rbf"},
         "score": 0.87,
+<<<<<<< HEAD
         "timestamp": datetime.now().isoformat()
+=======
+        "timestamp": datetime.now().isoformat(),
+>>>>>>> r1remote/development
     }
 
 
 @pytest.fixture
 def temp_log_dir():
+<<<<<<< HEAD
+=======
+    """Create and clean up a temporary directory for log files."""
+>>>>>>> r1remote/development
     log_dir = "temp_test_logs"
     os.makedirs(log_dir, exist_ok=True)
     yield log_dir
@@ -29,10 +44,16 @@ def temp_log_dir():
 
 
 def test_log_json_format(sample_log, temp_log_dir):
+<<<<<<< HEAD
     path = TrainerLogger.log_optimization_progress(
         sample_log,
         log_dir=temp_log_dir,
         file_format="json"
+=======
+    """Test saving the optimization log in JSON format."""
+    path = TrainerLogger.log_optimization_progress(
+        sample_log, log_dir=temp_log_dir, file_format="json"
+>>>>>>> r1remote/development
     )
     assert os.path.exists(path)
     assert path.endswith(".json")
@@ -44,10 +65,16 @@ def test_log_json_format(sample_log, temp_log_dir):
 
 
 def test_log_pickle_format(sample_log, temp_log_dir):
+<<<<<<< HEAD
     path = TrainerLogger.log_optimization_progress(
         sample_log,
         log_dir=temp_log_dir,
         file_format="pickle"
+=======
+    """Test saving the optimization log in Pickle format."""
+    path = TrainerLogger.log_optimization_progress(
+        sample_log, log_dir=temp_log_dir, file_format="pickle"
+>>>>>>> r1remote/development
     )
     assert os.path.exists(path)
     assert path.endswith(".pkl")
@@ -59,6 +86,7 @@ def test_log_pickle_format(sample_log, temp_log_dir):
 
 
 def test_invalid_format_raises_error(sample_log):
+<<<<<<< HEAD
     with pytest.raises(ValueError):
         TrainerLogger.log_optimization_progress(
             sample_log,
@@ -76,10 +104,24 @@ def test_non_dict_input_raises_type_error(tmp_path):
             progress_log=invalid_input,
             log_dir=str(tmp_path),
             file_format="json"
+=======
+    """Test that an unsupported file format raises a ValueError."""
+    with pytest.raises(ValueError):
+        TrainerLogger.log_optimization_progress(sample_log, file_format="xml")
+
+
+def test_non_dict_input_raises_type_error(tmp_path):
+    """Test that passing a non-dictionary input raises a TypeError."""
+    invalid_input = ["not", "a", "dict"]
+    with pytest.raises(TypeError, match="progress_log must be a dictionary"):
+        TrainerLogger.log_optimization_progress(
+            progress_log=invalid_input, log_dir=str(tmp_path), file_format="json"
+>>>>>>> r1remote/development
         )
 
 
 def test_empty_dict_raises_value_error(tmp_path):
+<<<<<<< HEAD
     empty_input = {}
     with pytest.raises(
         ValueError,
@@ -89,4 +131,11 @@ def test_empty_dict_raises_value_error(tmp_path):
             progress_log=empty_input,
             log_dir=str(tmp_path),
             file_format="json"
+=======
+    """Test that passing an empty dictionary raises a ValueError."""
+    empty_input = {}
+    with pytest.raises(ValueError, match="progress_log must be a non-empty dictionary"):
+        TrainerLogger.log_optimization_progress(
+            progress_log=empty_input, log_dir=str(tmp_path), file_format="json"
+>>>>>>> r1remote/development
         )

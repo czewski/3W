@@ -6,12 +6,22 @@ from datetime import datetime
 from typing import Dict, Any, Union, Optional
 from pathlib import Path
 
+<<<<<<< HEAD
 class TrainerLogger:
     """
     A utility class for logging training and optimization progress.
     Supports multiple file formats including JSON and Pickle.
     """
 
+=======
+
+class TrainerLogger:
+    """
+    A utility class for logging training and optimization progress.
+    Supports multiple file formats including JSON and Pickle.
+    """
+
+>>>>>>> r1remote/development
     # Supported file formats
     SUPPORTED_FORMATS = {"json", "pickle"}
 
@@ -38,7 +48,11 @@ class TrainerLogger:
         cls,
         progress_log: Dict[str, Any],
         log_dir: Union[str, Path] = "logs",
+<<<<<<< HEAD
         file_format: str = "json"
+=======
+        file_format: str = "json",
+>>>>>>> r1remote/development
     ) -> str:
         """
         Logs the optimization progress to a JSON or Pickle file.
@@ -54,9 +68,13 @@ class TrainerLogger:
         logger = cls._get_logger()
 
         if file_format not in cls.SUPPORTED_FORMATS:
+<<<<<<< HEAD
             raise ValueError(
                 f"file_format must be one of {cls.SUPPORTED_FORMATS}"
             )
+=======
+            raise ValueError(f"file_format must be one of {cls.SUPPORTED_FORMATS}")
+>>>>>>> r1remote/development
 
         if not isinstance(progress_log, dict):
             raise TypeError("progress_log must be a dictionary")
@@ -73,10 +91,17 @@ class TrainerLogger:
 
         try:
             if file_format == "json":
+<<<<<<< HEAD
                 with open(file_path, 'w', encoding='utf-8') as f:
                     json.dump(progress_log, f, ensure_ascii=False)
             else:
                 with open(file_path, 'wb') as f:
+=======
+                with open(file_path, "w", encoding="utf-8") as f:
+                    json.dump(progress_log, f, ensure_ascii=False)
+            else:
+                with open(file_path, "wb") as f:
+>>>>>>> r1remote/development
                     pickle.dump(progress_log, f)
 
             logger.info("Log saved at: %s", file_path)

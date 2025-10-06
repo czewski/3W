@@ -41,5 +41,15 @@ Mark all that apply:
 
 ---
 
+<<<<<<< HEAD
 Thank you for contributing! 🙏
 >>>>>>> r1remote/main
+=======
+## Jupyter Notebook Reminder
+
+📌 If you are adding a Jupyter Notebook, please include a screenshot of useful plots or outputs in the PR description to make the review easier. 
+
+---
+
+Thank you for contributing! 🙏
+>>>>>>> r1remote/development
